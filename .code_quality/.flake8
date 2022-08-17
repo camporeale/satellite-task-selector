@@ -1,0 +1,5 @@
+[flake8]
+max-line-length = 100
+exclude = .git,__pycache__,old,build,dist,venv,env,.env,.venv,migrations
+per-file-ignores =
+    */app/__main__.py: E402
