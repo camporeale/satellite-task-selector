@@ -1,5 +1,7 @@
 version: "3.9"
 services:
+
+# Core Services
   api:
     image: satellite-task-selector
     container_name: task-selector
@@ -14,6 +16,8 @@ services:
       - LOGGER_LEVEL=DEBUG
     depends_on:
       - redis
+    volumes:
+      - logs-data:/logs
 
   redis:
     image: redis
@@ -23,6 +27,7 @@ services:
     volumes:
         - redis_data:/data
 
+# Monitoring
   prometheus:
     image: prom/prometheus:latest
     restart: unless-stopped
@@ -48,5 +53,26 @@ services:
     env_file:
       - ./monitoring/config.monitoring
 
+# Logging
+  elk:
+    image: sebp/elk
+    ports:
+      - "5601:5601"
+      - "9200:9200"
+      - "5044:5044"
+    volumes:
+      - elk-data:/var/lib/elasticsearch
+
+  filebeat:
+      build:
+          context: ./logging/
+      container_name: filebeat
+      volumes:
+          - logs-data:/logs
+      depends_on:
+          - elk
+  
 volumes:
     redis_data:
+    elk-data:
+    logs-data: 
