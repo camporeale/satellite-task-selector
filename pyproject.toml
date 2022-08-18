@@ -12,6 +12,7 @@ numpy = "^1.23.1"
 redis = "^4.3.4"
 uvicorn = "^0.18.2"
 loguru = "^0.6.0"
+prometheus-fastapi-instrumentator = "^5.8.2"
 
 [tool.poetry.dev-dependencies]
 
