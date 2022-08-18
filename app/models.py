@@ -27,7 +27,7 @@ class Task(BaseModel):
         schema_extra = {
             "example": {
                 "name": "capture for client 1234",
-                "resources": ["disc", "camera", "proc"],
+                "resources": ["disk", "camera", "proc"],
                 "profit": 9.2,
             }
         }
@@ -49,19 +49,31 @@ class BatchSelection(BaseModel):
                 "selected_tasks": [
                     {
                         "name": "capture for client 1234",
-                        "resources": ["disc", "camera", "proc"],
+                        "resources": ["disk", "camera"],
                         "profit": 9.2,
                         "buffered": False,
-                    }
+                    },
+                    {
+                        "name": "check proc",
+                        "resources": ["proc"],
+                        "profit": 3,
+                        "buffered": True,
+                    },
                 ],
                 "buffered_tasks": [
                     {
                         "name": "clean satellite disk",
-                        "resources": ["disc"],
-                        "profit": 4.1,
+                        "resources": ["disk"],
+                        "profit": 1.2,
                         "buffered": True,
-                    }
+                    },
+                    {
+                        "name": "test task",
+                        "resources": ["proc"],
+                        "profit": 2.1,
+                        "buffered": True,
+                    },
                 ],
-                "profit": 9.2,
+                "profit": 12.2,
             }
         }

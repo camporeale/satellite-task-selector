@@ -11,7 +11,7 @@ repos:
     - id: pylint
       args:
         - --rcfile=.code_quality/.pylintrc
-      additional_dependencies: ["redis", "fastapi", "loguru"]
+      additional_dependencies: ["redis", "fastapi", "loguru", "prometheus_fastapi_instrumentator"]
   - repo: https://github.com/ambv/black
     rev: 22.3.0
     hooks:
