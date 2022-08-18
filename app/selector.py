@@ -17,7 +17,7 @@ class BatchSelectorInterface(abc.ABC):
 
 
 class MaxProfitBatchSelector(BatchSelectorInterface):
-    """Batch Selector that uses profit maximization as a selection """
+    """Batch Selector that uses profit maximization as a selection"""
 
     def select_batch(self, task_list: List[Task]) -> BatchSelection:
         """
@@ -32,8 +32,9 @@ class MaxProfitBatchSelector(BatchSelectorInterface):
         final_selection = BatchSelection(
             selected_tasks=[], buffered_tasks=[], profit=sys.float_info.min
         )
+
         # Sort list of tasks by higher profit
-        task_list.sort(key=lambda x: x.profit, reverse=True)
+        task_list.sort(key=lambda x: x.profit, reverse=True)  # type:ignore
 
         # iterate on all tasks
         for idx, task in enumerate(task_list):
@@ -41,7 +42,8 @@ class MaxProfitBatchSelector(BatchSelectorInterface):
             task_selection = BatchSelection(
                 selected_tasks=[task], buffered_tasks=[], profit=task.profit
             )
-            for other_task in task_list[idx+1:]:
+            start_idx = idx + 1
+            for other_task in task_list[start_idx:]:
                 if commited_resources.isdisjoint(other_task.resources):
                     task_selection.selected_tasks.append(other_task)
                     task_selection.profit += other_task.profit
@@ -56,4 +58,3 @@ class MaxProfitBatchSelector(BatchSelectorInterface):
         ]
 
         return final_selection
-

@@ -13,6 +13,7 @@ from app.models import Task
 
 class TaskBuffer(abc.ABC):
     """Task buffer interface"""
+
     @abc.abstractmethod
     def check_connection(self) -> None:
         """Checks the connections is ok"""
@@ -34,7 +35,7 @@ class TaskBuffer(abc.ABC):
         """
 
     @abc.abstractmethod
-    def save_tasks(self, task_list: List[Task]):
+    def save_tasks(self, task_list: List[Task]) -> None:
         """Save tasks to buffer
 
         Args:
@@ -44,6 +45,7 @@ class TaskBuffer(abc.ABC):
 
 class RedisBuffer(TaskBuffer):
     """A redis based task buffer implementation"""
+
     TASK_PREFIX = "satellite:task:"
 
     def __init__(self, connection: redis.Redis) -> None:
@@ -90,7 +92,7 @@ class RedisBuffer(TaskBuffer):
         try:
             pipe = self._connection.pipeline()
             for task in task_list:
-                pipe.delete(self.TASK_PREFIX+task.name)
+                pipe.delete(self.TASK_PREFIX + task.name)
             pipe.execute()
         except RedisError as excp:
             logger.exception(excp)
@@ -109,11 +111,14 @@ class RedisBuffer(TaskBuffer):
             result = pipe.execute()
             if not all(result):
                 failed_count = len(result) - sum(result)
-                failure_message = f"Failed to load tasks to buffer, number of failed loads: {failed_count}"
+                failure_message = (
+                    f"Failed to load tasks to buffer, number of failed loads: {failed_count}"
+                )
                 logger.error(failure_message)
         except RedisError as excp:
             logger.exception(excp)
             raise TaskBufferException("Failed to save tasks to buffer") from excp
+
 
 def create_buffer() -> TaskBuffer:
     """Returns a buffer"""
@@ -122,7 +127,7 @@ def create_buffer() -> TaskBuffer:
         host=configuration.redis_host,
         port=configuration.redis_port,
         db=configuration.redis_db,
-        decode_responses=True
+        decode_responses=True,
     )
     return RedisBuffer(connection=connection)
 

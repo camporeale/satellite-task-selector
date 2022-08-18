@@ -1,5 +1,6 @@
 """Exceptions module"""
 
+
 class TaskBufferException(Exception):
     """Exception raised by buffer"""
 

@@ -6,7 +6,6 @@ from loguru import logger
 from app.models import Task
 
 
-
 class TaskProcessor(abc.ABC):
     """Task Processor interface"""
 
@@ -17,6 +16,7 @@ class TaskProcessor(abc.ABC):
 
 class SyncProcessor(TaskProcessor):
     """A syncronous processor"""
+
     def process_batch(self, batch: List[Task]) -> None:
         """Processes a list of tasks"""
         logger.debug(f"Batch processed succesfuly: {batch}")
@@ -24,4 +24,3 @@ class SyncProcessor(TaskProcessor):
 
 class CeleryProcessor(TaskProcessor):
     """Celery Processor"""
-

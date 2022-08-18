@@ -12,7 +12,7 @@ app.include_router(tasks_router)
 
 
 @app.on_event("startup")
-def startup_event():
+def startup_event() -> None:
     """Startup event"""
     settings = get_settings()
     logger.remove()
