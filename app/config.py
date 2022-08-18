@@ -14,6 +14,7 @@ class Settings(BaseSettings):
     redis_port: int = int(os.environ.get("REDIS_PORT", "6379"))
     redis_db: int = int(os.environ.get("REDIS_DB", "0"))
     logger_level: str = os.environ.get("LOGGER_LEVEL", "DEBUG")
+    log_file: str = os.environ.get("LOG_FILE", "/logs/api.log")
 
 
 def get_settings() -> Settings:

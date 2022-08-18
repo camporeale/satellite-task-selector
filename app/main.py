@@ -20,5 +20,6 @@ def startup_event() -> None:
     settings = get_settings()
     logger.remove()
     logger.add(sys.stderr, level=settings.logger_level)
+    logger.add(settings.log_file, level=settings.logger_level)
     task_buffer.check_connection()
     logger.debug("Started Satellite Task Selector App")
