@@ -14,9 +14,6 @@ services:
       - LOGGER_LEVEL=DEBUG
     depends_on:
       - redis
-    volumes:
-      - ./feedback:/src/feedback
-      - ./uploads:/src/static/uploads
 
   redis:
     image: redis
