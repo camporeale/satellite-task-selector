@@ -13,7 +13,7 @@ from app.selector import MaxProfitBatchSelector
 tasks_router = APIRouter(prefix="/tasks")
 
 
-@tasks_router.post("/batch", response_model=BatchSelection)
+@tasks_router.post("/batch", response_model=BatchSelection, response_model_exclude_none=True)
 def add_batch(batch: List[Task]) -> BatchSelection:
     """Receives a list of tasks, combines them with buffered tasks from previous
     requests, selects the subset with the higher profit, sends them for processing,
