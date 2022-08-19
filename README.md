@@ -19,6 +19,11 @@ Code quality checks are implemented using the [pre-commit](https://pre-commit.co
 - [MyPy](https://mypy.readthedocs.io/en/stable/) 
 - [Black](https://github.com/psf/black)
 
+
+## Architecture
+
+![docs](./images/satellite-task-selector.png)
+
 ## Running the application
 ### From source
 
@@ -131,7 +136,7 @@ $ curl -X 'POST' \
     "name": "capture for client 1234",
     "resources": [
       "disk",
-      "camera",
+      "camera",s
       "proc"
     ],
     "profit": 9.2
@@ -196,3 +201,13 @@ Logs are published to docker standard output, if using the ELK infrastructure, l
 
 ### Metrics
 Metrics are published to Grafana here: http://localhost:3000/ 
+
+
+### Tests
+
+Unit tests are in the tests/ directory. To run the tests execute from the project root:
+
+
+```bash
+   $ poetry run pytest
+```
